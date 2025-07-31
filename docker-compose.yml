@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  iterra-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: iterra-wellness-app
+    ports:
+      - "3000:80"
+    environment:
+      - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
+      - NODE_ENV=production
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    labels:
+      - "com.iterra.app=wellness-hub"
+      - "com.iterra.version=1.0.0"
+    networks:
+      - iterra-network
+
+networks:
+  iterra-network:
+    driver: bridge
+    name: iterra-wellness-network

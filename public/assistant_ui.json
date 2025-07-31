@@ -1,0 +1,46 @@
+{
+  "assistantPanel": {
+    "name": "iTERRA™ Concierge",
+    "position": "bottom-right",
+    "icon": "custom-icon.png",
+    "branding": "Powered by Healthy Lifestyle Education Services",
+    "categories": [
+      {
+        "emoji": "💪",
+        "title": "Masculine Vitality",
+        "subtitle": "Hormone balance, endurance, libido, stamina"
+      },
+      {
+        "emoji": "🌹",
+        "title": "Divine Feminine Energy",
+        "subtitle": "Cycles, radiance, sensuality, emotional wellness"
+      },
+      {
+        "emoji": "✨",
+        "title": "Wellness Sanctuary",
+        "subtitle": "Curated oils, blends, sacred botanicals"
+      },
+      {
+        "emoji": "💼",
+        "title": "Wellness Entrepreneurship",
+        "subtitle": "Business tools, team building, leadership"
+      },
+      {
+        "emoji": "📿",
+        "title": "Wisdom of Wellness",
+        "subtitle": "Courses, rituals, lifestyle protocols"
+      },
+      {
+        "emoji": "🐾",
+        "title": "Pets",
+        "subtitle": "Pet-safe oils, behavior blends, care protocols"
+      },
+      {
+        "emoji": "🏡",
+        "title": "Home",
+        "subtitle": "Natural cleaning, ambiance, DIY recipes"
+      }
+    ],
+    "disclaimer": "This AI is for educational use only. It is not a substitute for professional or veterinary advice. Results may vary."
+  }
+}
