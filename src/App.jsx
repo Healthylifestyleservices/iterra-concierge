@@ -84,3 +84,13 @@ export default function App() {
     </Router>
   );
 }
+import React from 'react';
+
+export default function App() {
+  return (
+    <div style={{ color: 'white', backgroundColor: 'black', minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+      <h1>iTERRA IS LIVE ✅</h1>
+      <p>If you're seeing this, your frontend is rendering correctly.</p>
+    </div>
+  );
+}
