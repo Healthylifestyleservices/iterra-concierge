@@ -1,8 +1,10 @@
-import React from 'react';
+nano src/App.jsx  # (Paste the full code above)
+# Press Ctrl+O to save, then Enter
+# Press Ctrl+X to exit
 
-export default function App() {
-  return (
-    <div style={{ backgroundColor: 'black', color: 'white', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <h1>✨ Welcome to iTERRA™ Concierge App</h1>
-    </div>
-  );
+git add src/App.jsx
+git commit -m "🌟 Restore full iTERRA UI interface"
+git push
+
+
+
