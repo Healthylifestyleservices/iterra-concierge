@@ -1,5 +1,4 @@
-k  GNU nano 7.2                          package.json *                                  
-"@vitejs/plugin-react": "^4.7.0",{
+{
   "name": "iterra-app-rep",
   "version": "1.0.0",
   "scripts": {
@@ -18,3 +17,7 @@ k  GNU nano 7.2                          package.json *
     "@vitejs/plugin-react": "^4.7.0",
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.3",
+    "vite": "^5.2.9"
+  }
+}
