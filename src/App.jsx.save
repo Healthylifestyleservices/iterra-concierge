@@ -1,0 +1,54 @@
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import FlowerOfLife from "./components/FlowerOfLife";
+import ParticleBackground from "./components/ParticleBackground";
+import "./App.css";
+
+const categories = [
+  { label: "Crafted Wellness Intake", path: "/intake" },
+  { label: "Masculine Vitality", path: "/masculine" },
+  { label: "Feminine Energy", path: "/feminine" },
+  { label: "Pet Harmony", path: "/pets" },
+  { label: "Home Essentials", path: "/home" },
+  { label: "Leadership", path: "/leadership" },
+  { label: "Wisdom of Wellness", path: "/wisdom" },
+];
+
+export default function App() {
+  return (
+    <Router>
+      <div className="app-container">
+        <ParticleBackground />
+        <FlowerOfLife />
+
+        <div className="title">iTerra™</div>
+        <p className="subtitle">Lifestyle Concierge</p>
+
+        <div className="button-grid">
+          {categories.map((cat, i) => (
+            <Link key={i} to={cat.path} className="nav-button">
+              {cat.label}
+            </Link>
+          ))}
+        </div>
+
+        <div className="assistant-button">iTerra™</div>
+
+        <footer className="footer">© Health Lifestyle Education Services 2025</footer>
+
+        <Routes>
+          {categories.map((cat, i) => (
+            <Route key={i} path={cat.path} element={
+              <div className="page">
+                <h2>{cat.label}</h2>
+                <p>This page is under construction but linked properly.</p>
+              </div>
+            } />
+          ))}
+        </Routes>
+      </div>
+    </Router>
+  );
+}
+
+

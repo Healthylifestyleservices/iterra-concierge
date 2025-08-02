@@ -1,64 +1,54 @@
-body, html {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* iTERRA™ Luxury Theme */
+
+body {
   margin: 0;
-  padding: 0;
-  background-color: #2c1e1a; /* chocolate velvet */
-  font-family: 'Serif', sans-serif;
-  color: #fff;
+  font-family: 'Inter', sans-serif;
+  background-color: #1c0f0a; /* Deep velvet brown */
+  color: #f7e7ce; /* Champagne */
 }
 
+/* Velvet background gradient */
+.bg-velvet {
+  background: linear-gradient(to bottom right, #3a1c1c, #1c0e0e);
+}
+
+/* Champagne text color */
+.text-champagne {
+  color: #f7e7ce;
+}
+
+/* Gold border accent */
+.border-gold {
+  border-color: #d4af37;
+}
+
+/* Glowing text effect */
+.glow-text {
+  text-shadow: 0 0 6px rgba(255, 223, 150, 0.8), 0 0 12px rgba(255, 223, 150, 0.6);
+}
+
+/* App container layout */
 .app-container {
-  text-align: center;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  position: relative;
   padding: 2rem;
+  min-height: 100vh;
 }
 
-.sacred-geo-bg {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: url('/sacred-geometry.svg') center center no-repeat;
-  background-size: cover;
-  opacity: 0.05;
-  z-index: 0;
+/* Glass-style luxury cards */
+.luxury-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 0 20px rgba(255, 223, 150, 0.15);
+  color: #f7e7ce;
 }
 
-.title {
-  font-size: 2rem;
-  color: #b87333; /* bronze */
-  margin-bottom: 2rem;
-  z-index: 1;
-}
-
-.button-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.2rem;
-  z-index: 1;
-  max-width: 800px;
-  width: 100%;
-}
-
-.nav-button {
-  background-color: transparent;
-  border: 2px solid #b87333;
-  color: #b87333;
-  text-decoration: none;
-  padding: 1rem;
-  border-radius: 8px;
-  transition: all 0.3s ease;
-}
-
-.nav-button:hover {
-  background-color: #b87333;
-  color: #2c1e1a;
-}
-
-.placeholder {
-  padding: 4rem;
-  z-index: 1;
-}
 

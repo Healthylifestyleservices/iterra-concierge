@@ -1,0 +1,64 @@
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+
+import "./App.css";
+import FlowerOfLife from "./components/FlowerOfLife";
+
+import WellnessIntake from "./pages/WellnessIntake";
+import Masculine from "./pages/Masculine";
+import Feminine from "./pages/Feminine";
+import Pets from "./pages/Pets";
+import HomeEssentials from "./pages/HomeEssentials";
+import Leadership from "./pages/Leadership";
+import Wisdom from "./pages/Wisdom";
+
+// 🛡️ Sigil Lock
+const VESICA_SIGIL = "VESICA-BRONZE-OBSIDIAN-HEX";
+
+export default function App() {
+  useEffect(() => {
+    if (VESICA_SIGIL !== "VESICA-BRONZE-OBSIDIAN-HEX") {
+      console.error("⚠️ Sigil mismatch. Grid interference detected.");
+    }
+  }, []);
+
+  const categories = [
+    { label: "Crafted Wellness Intake", path: "/intake" },
+    { label: "Masculine Vitality", path: "/masculine" },
+    { label: "Feminine Energy", path: "/feminine" },
+    { label: "Pet Harmony", path: "/pets" },
+    { label: "Home Essentials", path: "/home" },
+    { label: "Leadership", path: "/leadership" },
+    { label: "Wisdom of Wellness", path: "/wisdom" }
+  ];
+
+  return (
+    <Router>
+      <div className="app-container bg-velvet min-h-screen flex flex-col justify-center items-center">
+        <FlowerOfLife />
+        <div className="title text-gold text-3xl font-bold mt-8 mb-4">iTERRA™ Concierge</div>
+        <div className="button-grid grid grid-cols-2 gap-4 mb-8">
+          {categories.map((cat) => (
+            <Link
+              key={cat.path}
+              to={cat.path}
+              className="category-button bg-gold text-black py-2 px-4 rounded-xl shadow-md hover:scale-105 transition-transform"
+            >
+              {cat.label}
+            </Link>
+          ))}
+        </div>
+        <Routes>
+          <Route path="/intake" element={<WellnessIntake />} />
+          <Route path="/masculine" element={<Masculine />} />
+          <Route path="/feminine" element={<Feminine />} />
+          <Route path="/pets" element={<Pets />} />
+          <Route path="/home" element={<HomeEssentials />} />
+          <Route path="/leadership" element={<Leadership />} />
+          <Route path="/wisdom" element={<Wisdom />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+}
+
