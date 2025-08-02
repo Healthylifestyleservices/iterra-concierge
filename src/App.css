@@ -1,54 +1,51 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* iTERRA™ Luxury Theme */
-
-body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  background-color: #1c0f0a; /* Deep velvet brown */
-  color: #f7e7ce; /* Champagne */
-}
-
-/* Velvet background gradient */
-.bg-velvet {
-  background: linear-gradient(to bottom right, #3a1c1c, #1c0e0e);
-}
-
-/* Champagne text color */
-.text-champagne {
-  color: #f7e7ce;
-}
-
-/* Gold border accent */
-.border-gold {
-  border-color: #d4af37;
-}
-
-/* Glowing text effect */
-.glow-text {
-  text-shadow: 0 0 6px rgba(255, 223, 150, 0.8), 0 0 12px rgba(255, 223, 150, 0.6);
-}
-
-/* App container layout */
 .app-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem;
+  background-color: #1c0f0a;
   min-height: 100vh;
+  position: relative;
 }
-
-/* Glass-style luxury cards */
-.luxury-card {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(212, 175, 55, 0.3);
-  border-radius: 1rem;
-  padding: 2rem;
-  box-shadow: 0 0 20px rgba(255, 223, 150, 0.15);
+.sacred-geo-bg {
+  background-image: url('/sacred-geometry.svg');
+  opacity: 0.2;
+  position: absolute;
+  inset: 0;
+}
+.title {
+  color: #f7e7ce;
+  font-size: 2.5rem;
+  text-align: center;
+  padding: 20px;
+}
+.button-grid {
+  display: grid;
+  gap: 10px;
+  padding: 20px;
+}
+.nav-button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid #f7e7ce;
+  border-radius: 20px;
+  color: #f7e7ce;
+  padding: 10px;
+  cursor: pointer;
+}
+.modal {
+  position: fixed;
+  top: 20%;
+  left: 20%;
+  right: 20%;
+  background: rgba(28, 15, 10, 0.9);
+  border: 1px solid #f7e7ce;
+  border-radius: 10px;
+  padding: 20px;
   color: #f7e7ce;
 }
-
-
+.assistant-panel {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(28, 15, 10, 0.9);
+  border: 1px solid #f7e7ce;
+  border-radius: 10px;
+  padding: 10px;
+  color: #f7e7ce;
+}
