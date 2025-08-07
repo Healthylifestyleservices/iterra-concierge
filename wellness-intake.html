@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wellness Intake</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Playfair Display', 'Times New Roman', serif;
+            background: linear-gradient(135deg, #1a0a0a 0%, #2d1a1a 50%, #1a0a0a 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #f8f4f0;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Sacred Geometry Background */
+        .sacred-bg {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 800px;
+            opacity: 0.12;
+            z-index: 0;
+            pointer-events: none;
+            animation: sacredSpin 300s linear infinite;
+        }
+
+        @keyframes sacredSpin {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Floating Lotus */
+        .lotus {
+            position: fixed;
+            font-size: 20px;
+            color: #e8c5a0;
+            pointer-events: none;
+            animation: lotusFloat 25s linear infinite;
+            z-index: 2;
+            opacity: 0.7;
+        }
+
+        @keyframes lotusFloat {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            80% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(200px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(232, 197, 160, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(232, 197, 160, 0.3);
+            padding: 12px 24px;
+            border-radius: 25px;
+            color: #f8f4f0;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            z-index: 90;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-btn:hover {
+            background: rgba(232, 197, 160, 0.25);
+            box-shadow: 0 0 30px rgba(232, 197, 160, 0.4);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 900px;
+            margin: 60px auto;
+            background: rgba(232, 197, 160, 0.08);
+            backdrop-filter: blur(30px);
+            border: 2px solid rgba(232, 197, 160, 0.2);
+            border-radius: 30px;
+            padding: 60px;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.4),
+                0 0 100px rgba(232, 197, 160, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 10;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .title {
+            font-size: 42px;
+            font-weight: 300;
+            color: #f8f4f0;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+            text-shadow: 0 0 30px rgba(232, 197, 160, 0.5);
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: rgba(248, 244, 240, 0.8);
+            line-height: 1.6;
+            font-style: italic;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Sections */
+        .section {
+            margin-bottom: 30px;
+            background: rgba(232, 197, 160, 0.06);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(232, 197, 160, 0.15);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .section-header {
+            padding: 25px 30px;
+            background: rgba(232, 197, 160, 0.12);
+            backdrop-filter: blur(15px);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(232, 197, 160, 0.1);
+        }
+
+        .section-header:hover {
+            background: rgba(232, 197, 160, 0.18);
+            box-shadow: 0 0 30px rgba(232, 197, 160, 0.2);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 500;
+            color: #f8f4f0;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .arrow {
+            font-size: 20px;
+            color: rgba(232, 197, 160, 0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .section.open .arrow {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .section.open .section-content {
+            max-height: 2000px;
+        }
+
+        .section-inner {
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 8px 0;
+        }
+
+        .option input {
+            margin-right: 15px;
+            transform: scale(1.3);
+            accent-color: #e8c5a0;
+            filter: drop-shadow(0 0 5px rgba(232, 197, 160, 0.5));
+        }
+
+        .option label {
+            color: rgba(248, 244, 240, 0.9);
+            cursor: pointer;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .option:hover label {
+            color: #f8f4f0;
+            text-shadow: 0 0 10px rgba(232, 197, 160, 0.5);
+        }
+
+        .pet-options {
+            margin-left: 30px;
+            margin-top: 15px;
+            display: none;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            padding: 20px;
+            background: rgba(232, 197, 160, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid rgba(232, 197, 160, 0.2);
+        }
+
+        .pet-options.show {
+            display: grid;
+        }
+
+        .dynamic {
+            display: none;
+            margin-top: 25px;
+            padding: 25px;
+            background: rgba(232, 197, 160, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            border: 1px solid rgba(232, 197, 160, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .dynamic.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dynamic-title {
+            font-size: 16px;
+            color: rgba(232, 197, 160, 0.9);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+
+        .glass-box {
+            background: rgba(232, 197, 160, 0.08);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(232, 197, 160, 0.15);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 
+                0 4px 20px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .box-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: rgba(232, 197, 160, 0.9);
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(232, 197, 160, 0.2);
+            padding-bottom: 10px;
+        }
+
+        .full-reset {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(232, 197, 160, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            border: 1px solid rgba(232, 197, 160, 0.3);
+        }
+
+        .full-reset label {
+            font-weight: 600;
+            color: #e8c5a0;
+        }
+
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(232, 197, 160, 0.3);
+            border-radius: 12px;
+            color: #f8f4f0;
+            font-size: 15px;
+        }
+
+        .input-field::placeholder {
+            color: rgba(248, 244, 240, 0.5);
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: rgba(232, 197, 160, 0.6);
+            box-shadow: 0 0 20px rgba(232, 197, 160, 0.3);
+        }
+
+        .legal-item {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: rgba(232, 197, 160, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            border: 1px solid rgba(232, 197, 160, 0.2);
+        }
+
+        /* GORGEOUS GLASS BREATHING SUBMIT BUTTON */
+        .submit-btn {
+            background: linear-gradient(135deg, 
+                rgba(232, 197, 160, 0.95) 0%,
+                rgba(200, 160, 120, 1) 50%,
+                rgba(170, 130, 90, 0.95) 100%);
+            backdrop-filter: blur(25px);
+            border: 2px solid rgba(232, 197, 160, 0.6);
+            padding: 22px 55px;
+            border-radius: 35px;
+            color: #f8f4f0;
+            font-size: 22px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 60px auto;
+            display: block;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.4),
+                0 0 80px rgba(232, 197, 160, 0.6),
+                inset 0 2px 0 rgba(255, 255, 255, 0.3),
+                inset 0 -2px 8px rgba(0, 0, 0, 0.2);
+            animation: breatheButton 6s ease-in-out infinite;
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 50;
+        }
+
+        @keyframes breatheButton {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 
+                    0 20px 50px rgba(0, 0, 0, 0.4),
+                    0 0 80px rgba(232, 197, 160, 0.6),
+                    inset 0 2px 0 rgba(255, 255, 255, 0.3),
+                    inset 0 -2px 8px rgba(0, 0, 0, 0.2);
+            }
+            50% { 
+                transform: scale(1.08);
+                box-shadow: 
+                    0 25px 60px rgba(0, 0, 0, 0.5),
+                    0 0 120px rgba(232, 197, 160, 0.8),
+                    inset 0 3px 0 rgba(255, 255, 255, 0.4),
+                    inset 0 -3px 12px rgba(0, 0, 0, 0.3);
+            }
+        }
+
+        .submit-btn:hover {
+            animation-play-state: paused;
+            transform: scale(1.12);
+            box-shadow: 
+                0 30px 70px rgba(0, 0, 0, 0.6),
+                0 0 150px rgba(232, 197, 160, 0.9),
+                inset 0 4px 0 rgba(255, 255, 255, 0.5),
+                inset 0 -4px 16px rgba(0, 0, 0, 0.4);
+            border-color: rgba(232, 197, 160, 0.8);
+        }
+
+        .sacred-icon {
+            display: inline-block;
+            margin: 0 15px;
+            font-size: 20px;
+            opacity: 0.9;
+            animation: sacredGlow 3s ease-in-out infinite alternate;
+            filter: drop-shadow(0 0 10px rgba(232, 197, 160, 0.8));
+        }
+
+        @keyframes sacredGlow {
+            0% { 
+                opacity: 0.7;
+                text-shadow: 0 0 10px rgba(232, 197, 160, 0.6);
+                transform: scale(1);
+            }
+            100% { 
+                opacity: 1;
+                text-shadow: 0 0 25px rgba(232, 197, 160, 1);
+                transform: scale(1.15);
+            }
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: rgba(248, 244, 240, 0.6);
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 40px 20px;
+                padding: 40px 30px;
+            }
+            
+            .form-row,
+            .input-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .pet-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sacred Geometry Background -->
+    <div class="sacred-bg">
+        <svg width="100%" height="100%" viewBox="0 0 800 800">
+            <circle cx="400" cy="400" r="60" fill="none" stroke="#e8c5a0" stroke-width="1" opacity="0.6"/>
+            <circle cx="400" cy="340" r="60" fill="none" stroke="#e8c5a0" stroke-width="1" opacity="0.6"/>
+            <circle cx="452" cy="370" r="60" fill="none" stroke="#e8c5a0" stroke-width="1" opacity="0.6"/>
+            <circle cx="452" cy="430" r="60" fill="none" stroke="#e8c5a0" stroke-width="1" opacity="0.6"/>
+            <circle cx="400" cy="460" r="60" fill="none" stroke="#e8c5a0" stroke-width="1" opacity="0.6"/>
+            <circle cx="348" cy="430" r="60" fill="none" stroke="#e8c5a0" stroke-width="1" opacity="0.6"/>
+            <circle cx="348" cy="370" r="60" fill="none" stroke="#e8c5a0" stroke-width="1" opacity="0.6"/>
+            <circle cx="400" cy="280" r="60" fill="none" stroke="#c8a580" stroke-width="0.8" opacity="0.4"/>
+            <circle cx="474" cy="310" r="60" fill="none" stroke="#c8a580" stroke-width="0.8" opacity="0.4"/>
+            <circle cx="504" cy="370" r="60" fill="none" stroke="#c8a580" stroke-width="0.8" opacity="0.4"/>
+            <circle cx="504" cy="430" r="60" fill="none" stroke="#c8a580" stroke-width="0.8" opacity="0.4"/>
+            <circle cx="474" cy="490" r="60" fill="none" stroke="#c8a580" stroke-width="0.8" opacity="0.4"/>
+            <circle cx="400" cy="520" r="60" fill="none" stroke="#c8a580" stroke-width="0.8" opacity="0.4"/>
+            <circle cx="326" cy="490" r="60" fill="none" stroke="#c8a580" stroke-width="0.8" opacity="0.4"/>
+            <circle cx="296" cy="430" r="60" fill="none" stroke="#c8a580" stroke-width="0.8" opacity="0.4"/>
+            <circle cx="296" cy="370" r="60" fill="none" stroke="#c8a580" stroke-width="0.8" opacity="0.4"/>
+            <circle cx="326" cy="310" r="60" fill="none" stroke="#c8a580" stroke-width="0.8" opacity="0.4"/>
+            <line x1="250" y1="400" x2="550" y2="400" stroke="#e8c5a0" stroke-width="0.5" opacity="0.3"/>
+            <line x1="400" y1="250" x2="400" y2="550" stroke="#e8c5a0" stroke-width="0.5" opacity="0.3"/>
+        </svg>
+    </div>
+
+    <a href="/" class="back-btn">← Back to iTerra</a>
+
+    <div class="container">
+        <div class="header">
+            <div class="title">Wellness Intake</div>
+            <div class="subtitle">Curate your wellness experience using essential oils, supplements, and natural lifestyle offerings.</div>
+        </div>
+
+        <form id="wellnessForm">
+            <!-- Section 1: Who Is This For? -->
+            <div class="section open">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <div class="section-title">1. Who Is This For? (Select one)</div>
+                    <div class="arrow">▼</div>
+                </div>
+                <div class="section-content">
+                    <div class="section-inner">
+                        <div class="option">
+                            <input type="radio" id="male" name="userType" value="male">
+                            <label for="male">Adult Male</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="female" name="userType" value="female">
+                            <label for="female">Adult Female</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="child" name="userType" value="child">
+                            <label for="child">Child / Teen</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="pet" name="userType" value="pet">
+                            <label for="pet">Pet</label>
+                            <div class="pet-options" id="petOptions">
+                                <div class="option">
+                                    <input type="checkbox" id="dog" name="petType" value="dog">
+                                    <label for="dog">Dog</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="cat" name="petType" value="cat">
+                                    <label for="cat">Cat</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="horse" name="petType" value="horse">
+                                    <label for="horse">Horse</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="parrot" name="petType" value="parrot">
+                                    <label for="parrot">Parrot</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="bunny" name="petType" value="bunny">
+                                    <label for="bunny">Bunny</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dynamic sections for different user types -->
+                        <div class="dynamic" id="femaleSection">
+                            <div class="dynamic-title">❧ Are you hoping to support:</div>
+                            <div class="option">
+                                <input type="checkbox" id="hormonal" name="femaleGoals" value="hormonal">
+                                <label for="hormonal">Hormonal support - PMS, premenopause, menopause</label>
+                            </div>
+                            <div class="option">
+                                <input type="checkbox" id="mood" name="femaleGoals" value="mood">
+                                <label for="mood">Mood or emotional cycles</label>
+                            </div>
+                            <div class="option">
+                                <input type="checkbox" id="beauty" name="femaleGoals" value="beauty">
+                                <label for="beauty">Radiance / skin, hair, and beauty</label>
+                            </div>
+                            <div class="option">
+                                <input type="checkbox" id="reproductive" name="femaleGoals" value="reproductive">
+                                <label for="reproductive">Reproductive health / libido</label>
+                            </div>
+                            <div class="option">
+                                <input type="checkbox" id="weightF" name="femaleGoals" value="weight">
+                                <label for="weightF">Weight loss</label>
+                            </div>
+                            <div class="option">
+                                <input type="checkbox" id="cellulite" name="femaleGoals" value="cellulite">
+                                <label for="cellulite">Cellulite</label>
+                            </div>
+                            <div class="option">
+                                <input type="checkbox" id="sleep" name="femaleGoals" value="sleep">
+                                <label for="sleep">Sleeping beauty</label>
+                            </div>
+                        </div>
+
+                        <div class="dynamic" id="maleSection">
+                            <div class="dynamic-title">❧ Would you like to support:</div>
+                            <div class="option">
+                                <input type="checkbox" id="testosterone" name="maleGoals" value="testosterone">
+                                <label for="testosterone">Testosterone and masculine vitality</label>
+                            </div>
+                            <div class="option">
+                                <input type="checkbox" id="energy" name="maleGoals" value="energy">
+                                <label for="energy">Energy, drive, and stamina</label>
+                            </div>
+                            <div class="option">
+                                <input type="checkbox" id="athletic" name="maleGoals" value="athletic">
+                                <label for="athletic">Athletic performance or muscle recovery</label>
+                            </div>
+                            <div class="option">
+                                <input type="checkbox" id="prostate" name="maleGoals" value="prostate">
+                                <label for="prostate">Prostate health</label>
+                            </div>
+                            <div class="option">
+                                <input type="checkbox" id="sexual" name="maleGoals" value="sexual">
+                                <label for="sexual">Sexual vitality</label>
+                            </div>
+                            <div class="option">
+                                <input type="checkbox" id="weightM" name="maleGoals" value="weight">
+                                <label for="weightM">Weight loss</label>
+                            </div>
+                            <div class="option">
+                                <input type="checkbox" id="grooming" name="maleGoals" value="grooming">
+                                <label for="grooming">Hair and Male Grooming</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Support Areas -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <div class="section-title">2. What Are You Hoping to Support? (Choose up to 3, or Full-Body Reset)</div>
+                    <div class="arrow">▼</div>
+                </div>
+                <div class="section-content">
+                    <div class="section-inner">
+                        <div class="form-row">
+                            <div class="glass-box">
+                                <div class="box-title">Physical & Energy</div>
+                                <div class="option">
+                                    <input type="checkbox" id="longevitySupport" name="support" value="longevity">
+                                    <label for="longevitySupport">Longevity and healthy aging</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="energySupport" name="support" value="energy">
+                                    <label for="energySupport">Daily energy and stamina</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="sleepSupport" name="support" value="sleep">
+                                    <label for="sleepSupport">Rest and sleep</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="digestiveSupport" name="support" value="digestive">
+                                    <label for="digestiveSupport">Digestive health</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="cardio" name="support" value="cardio">
+                                    <label for="cardio">Cardiovascular health</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="respiratory" name="support" value="respiratory">
+                                    <label for="respiratory">Respiratory support</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="immuneSupport" name="support" value="immune">
+                                    <label for="immuneSupport">Immune defense</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="flexibilitySupport" name="support" value="flexibility">
+                                    <label for="flexibilitySupport">Flexibility and mobility</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="recovery" name="support" value="recovery">
+                                    <label for="recovery">Recovery and performance</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="weightSupport" name="support" value="weight">
+                                    <label for="weightSupport">Healthy weight</label>
+                                </div>
+                            </div>
+                            
+                            <div class="glass-box">
+                                <div class="box-title">Mental & Wellness</div>
+                                <div class="option">
+                                    <input type="checkbox" id="detox" name="support" value="detox">
+                                    <label for="detox">Detox and gentle cleansing</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="moodSupport" name="support" value="mood">
+                                    <label for="moodSupport">Mood Enhancement</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="cognitive" name="support" value="cognitive">
+                                    <label for="cognitive">Cognitive function and focus</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="clarity" name="support" value="clarity">
+                                    <label for="clarity">Mental clarity and memory</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="skinSupport" name="support" value="skin">
+                                    <label for="skinSupport">Skin health and natural beauty</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="hormonalSupport" name="support" value="hormonal">
+                                    <label for="hormonalSupport">Hormonal rhythm</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="environmental" name="support" value="environmental">
+                                    <label for="environmental">Environmental detox / home cleansing</label>
+                                </div>
+                                <div class="option">
+                                    <input type="checkbox" id="seasonal" name="support" value="seasonal">
+                                    <label for="seasonal">Seasonal shifts / transitions</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="full-reset">
+                            <div class="option">
+                                <input type="checkbox" id="fullReset" name="support" value="reset">
+                                <label for="fullReset">Full-body reset</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: Approach -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <div class="section-title">3. How Would You Like to Approach Wellness?</div>
+                    <div class="arrow">▼</div>
+                </div>
+                <div class="section-content">
+                    <div class="section-inner">
+                        <div class="option">
+                            <input type="checkbox" id="maintenance" name="approach" value="maintenance">
+                            <label for="maintenance">Daily maintenance/preventative care</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="stressReduction" name="approach" value="stress">
+                            <label for="stressReduction">Stress Reduction</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="lifeEvents" name="approach" value="events">
+                            <label for="lifeEvents">Life Events/Seasons</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="alignment" name="approach" value="alignment">
+                            <label for="alignment">Emotional and energetic alignment</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="systemSupport" name="approach" value="system">
+                            <label for="systemSupport">Full-circle system support</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="concierge" name="approach" value="concierge">
+                            <label for="concierge">I want a complete, concierge solution</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4: Experience & Usage -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <div class="section-title">4. Experience Level & Usage</div>
+                    <div class="arrow">▼</div>
+                </div>
+                <div class="section-content">
+                    <div class="section-inner">
+                        <div class="dynamic-title">What Is Your Current Experience Level?</div>
+                        <div class="option">
+                            <input type="radio" id="newUser" name="experience" value="new">
+                            <label for="newUser">I'm new to essential oils, natural products and wellness tools</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="dabbled" name="experience" value="dabbled">
+                            <label for="dabbled">I've dabbled and used a few products</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="routine" name="experience" value="routine">
+                            <label for="routine">I already have a wellness routine</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="advanced" name="experience" value="advanced">
+                            <label for="advanced">I'm advanced and ready to upgrade</label>
+                        </div>
+                        
+                        <div class="dynamic-title" style="margin-top: 30px;">How Do You Most Often Use Support Tools?</div>
+                        <div class="option">
+                            <input type="checkbox" id="asNeeded" name="usage" value="reactive">
+                            <label for="asNeeded">As needed (symptom-related or reactive)</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="preventive" name="usage" value="preventive">
+                            <label for="preventive">Daily preventive wellness</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="transitions" name="usage" value="transitions">
+                            <label for="transitions">During stress, seasons, or big transitions</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="emotionalUsage" name="usage" value="emotional">
+                            <label for="emotionalUsage">Emotionally or energetically</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="familyCare" name="usage" value="family">
+                            <label for="familyCare">For kids, pets, or family care</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="homeDetox" name="usage" value="home">
+                            <label for="homeDetox">For home or environmental detox</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 5: Contact -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <div class="section-title">5. Contact Preferences (Optional)</div>
+                    <div class="arrow">▼</div>
+                </div>
+                <div class="section-content">
+                    <div class="section-inner">
+                        <p style="color: rgba(248, 244, 240, 0.7); margin-bottom: 25px; font-style: italic;">Only required if you choose a truly personalized experience or want associate support.</p>
+                        <div class="input-row">
+                            <div>
+                                <label for="name" style="display: block; margin-bottom: 10px; color: rgba(232, 197, 160, 0.9); font-weight: 500;">Name:</label>
+                                <input type="text" id="name" name="name" class="input-field" placeholder="Your name">
+                            </div>
+                            <div>
+                                <label for="email" style="display: block; margin-bottom: 10px; color: rgba(232, 197, 160, 0.9); font-weight: 500;">Email:</label>
+                                <input type="email" id="email" name="email" class="input-field" placeholder="your@email.com">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 6: Legal -->
+            <div class="section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <div class="section-title">6. Legal Acknowledgment (REQUIRED)</div>
+                    <div class="arrow">▼</div>
+                </div>
+                <div class="section-content">
+                    <div class="section-inner">
+                        <div class="legal-item">
+                            <div class="option">
+                                <input type="checkbox" id="legal1" name="legal" value="medical" required>
+                                <label for="legal1">I understand that this is not a medical intake or treatment, mitigate, cure any disease. The intake is for suggesting health enhancing products and are not required to purchase.</label>
+                            </div>
+                        </div>
+                        <div class="legal-item">
+                            <div class="option">
+                                <input type="checkbox" id="legal2" name="legal" value="oils" required>
+                                <label for="legal2">I understand that essential oils will be included in my recommendations.</label>
+                            </div>
+                        </div>
+                        <div class="legal-item">
+                            <div class="option">
+                                <input type="checkbox" id="legal3" name="legal" value="responsibility" required>
+                                <label for="legal3">I accept full responsibility for use of natural tools for myself, my family, and pets. This is a suggestion only and not a truly personal program and needs to be adjusted per medications, allergens etc.</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+                <span class="sacred-icon">◊</span>
+                Create My Wellness Plan
+                <span class="sacred-icon">◊</span>
+            </button>
+        </form>
+
+        <div class="footer">
+            <p><strong>Results Delivery:</strong></p>
+            <p>Your personalized script will now appear.</p>
+            <p>Your recommendations will open in a second screen for your purchase.</p>
+        </div>
+    </div>
+
+    <script>
+        // Create floating lotus
+        function createLotus() {
+            const lotus = document.createElement('div');
+            lotus.className = 'lotus';
+            lotus.innerHTML = '🪷';
+            lotus.style.left = Math.random() * 100 + 'vw';
+            lotus.style.animationDelay = Math.random() * 25 + 's';
+            lotus.style.animationDuration = (Math.random() * 10 + 20) + 's';
+            document.body.appendChild(lotus);
+
+            setTimeout(() => {
+                if (lotus.parentNode) {
+                    lotus.remove();
+                }
+            }, 35000);
+        }
+
+        setInterval(createLotus, 3000);
+        for (let i = 0; i < 6; i++) {
+            setTimeout(createLotus, i * 500);
+        }
+
+        function toggleSection(header) {
+            const section = header.parentElement;
+            const isOpen = section.classList.contains('open');
+            
+            // Close all sections
+            document.querySelectorAll('.section').forEach(s => {
+                s.classList.remove('open');
+            });
+            
+            // Open clicked section if not already open
+            if (!isOpen) {
+                section.classList.add('open');
+            }
+        }
+
+        // Dynamic user type sections
+        document.querySelectorAll('input[name="userType"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                // Hide all dynamic sections
+                document.querySelectorAll('.dynamic').forEach(section => {
+                    section.classList.remove('show');
+                });
+                
+                // Show pet options if pet selected
+                const petOptions = document.getElementById('petOptions');
+                if (this.value === 'pet') {
+                    petOptions.classList.add('show');
+                } else {
+                    petOptions.classList.remove('show');
+                }
+                
+                // Show specific sections
+                if (this.value === 'female') {
+                    document.getElementById('femaleSection').classList.add('show');
+                } else if (this.value === 'male') {
+                    document.getElementById('maleSection').classList.add('show');
+                }
+            });
+        });
+
+        // Support selection limit (3 max or full reset)
+        document.querySelectorAll('input[name="support"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const supportBoxes = document.querySelectorAll('input[name="support"]:checked');
+                const fullReset = document.getElementById('fullReset');
+                
+                if (this.id === 'fullReset' && this.checked) {
+                    // If full reset selected, uncheck others
+                    document.querySelectorAll('input[name="support"]').forEach(cb => {
+                        if (cb.id !== 'fullReset') cb.checked = false;
+                    });
+                } else if (this.checked && fullReset.checked) {
+                    // If other selected and full reset checked, uncheck full reset
+                    fullReset.checked = false;
+                }
+                
+                // Limit to 3 selections
+                const nonResetSelected = Array.from(supportBoxes).filter(cb => cb.id !== 'fullReset');
+                if (nonResetSelected.length > 3 && this.checked && this.id !== 'fullReset') {
+                    this.checked = false;
+                    alert('Please select up to 3 support areas, or choose "Full-body reset" for comprehensive support.');
+                }
+            });
+        });
+
+        // Form submission with legal validation
+        document.getElementById('wellnessForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Check required legal checkboxes
+            const legalBoxes = document.querySelectorAll('input[name="legal"]:required');
+            const unchecked = Array.from(legalBoxes).filter(cb => !cb.checked);
+            
+            if (unchecked.length > 0) {
+                alert('⚠️ REQUIRED: Please accept ALL Legal Acknowledgments before submitting.');
+                
+                // Open legal section and scroll to it
+                const legalSection = document.querySelectorAll('.section')[5];
+                legalSection.classList.add('open');
+                legalSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                // Highlight unchecked items
+                unchecked.forEach(checkbox => {
+                    const item = checkbox.closest('.legal-item');
+                    item.style.border = '3px solid #ff6666';
+                    item.style.backgroundColor = 'rgba(255, 102, 102, 0.15)';
+                    
+                    setTimeout(() => {
+                        item.style.border = '';
+                        item.style.backgroundColor = '';
+                    }, 5000);
+                });
+                
+                return;
+            }
+            
+            // Success
+            alert('◊ Your wellness intake has been submitted! Generating your personalized recommendations... ◊');
+        });
+
+        // Initialize - open first section
+        document.querySelector('.section').classList.add('open');
+    </script>
+</body>
+</html>
